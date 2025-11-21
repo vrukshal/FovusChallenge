@@ -1,7 +1,5 @@
 from flask import Flask
-
-app = Flask(__name__)
-
+from utils.upload_utils import upload_file
 from flask import Flask, request, abort
 from werkzeug.utils import secure_filename
 import os
@@ -18,7 +16,11 @@ def upload_file():
     if file.filename == '':
         abort(400, description="No selected file")
 
-    return {"message": f"File '{file.filename}' successfully found!"}, 201
+    response = upload_file(file)
+    if response:
+        return {"message": f"File '{file.filename}' successfully uploaded to S3!"}, 201
+    else:
+        return {"message" : "Failed to upload file to S3"}, 500
 
 if __name__ == '__main__':
     app.run(debug=True)
