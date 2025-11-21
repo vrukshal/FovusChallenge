@@ -5,7 +5,7 @@ function App() {
   const [name, setName] = useState("");
   const [file, setFile] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!file) {
@@ -13,12 +13,27 @@ function App() {
       return;
     }
 
-    console.log("Name:", name);
-    console.log("File:", file);
-    // TODO: Upload to S3
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("file", file);
 
-    alert("uploaded file successfully");
+      const res = await fetch("http://localhost:5000/upload-file", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!res.ok) {
+        throw new Error("Upload failed");
+      }
+
+      alert("Uploaded file successfully");
+    } catch (err) {
+      console.error(err);
+      alert("Error uploading file");
+    }
   };
+
 
   return (
     <div className="app-container">
