@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv() 
 
-def upload_file(file_name, object_name=None):
+def upload_file_to_s3(file_name, object_name=None):
     """Upload a file to an S3 bucket
 
     :param file_name: File to upload
