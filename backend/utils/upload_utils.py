@@ -24,7 +24,10 @@ def upload_file_to_s3(file_name, object_name=None):
     buckets = [bucket['Name'] for bucket in response['Buckets']]
 
     if BUCKET_NAME not in buckets:
-        s3.create_bucket(Bucket=BUCKET_NAME)
+        s3.create_bucket(Bucket=BUCKET_NAME,
+                         CreateBucketConfiguration={
+                             'LocationConstraint': 'us-west-2'
+                         })
 
     try:
         response = s3.upload_file(file_name, BUCKET_NAME, object_name)

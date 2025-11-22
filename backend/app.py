@@ -2,10 +2,12 @@ from flask import Flask, request, abort
 from werkzeug.utils import secure_filename
 import os
 from utils.upload_utils import upload_file_to_s3
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 
 @app.route('/upload-file', methods=['POST'])
+@cross_origin() 
 def upload_file():
     if 'file' not in request.files:
         abort(400, description="No file found in request")
