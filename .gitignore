@@ -28,6 +28,11 @@ ENV/
 htmlcov/
 .tox/
 
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+
 # OS generated files
 .DS_Store
 Thumbs.db
